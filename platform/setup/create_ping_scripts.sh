@@ -16,6 +16,7 @@ if [ $# -ne 1 ]; then
 fi
 
 DIRECTORY="$1"
+TIMEOUT=10
 
 source config/subnet_config.sh
 
@@ -28,6 +29,7 @@ n_extern_links=${#extern_links[@]}
 echo '' > "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 echo  "#!/bin/bash" &> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 chmod +x "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
+echo "TIMEOUT=$TIMEOUT" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 echo "declare -A results" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 echo "echo \"\"> /home/log_ping.txt" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 
@@ -80,7 +82,7 @@ for ((kk=0;kk<n_groups;kk++)); do
                 mac_addr="aa:11:11:11:"$div":"$mod
 
                 cmd="nping --dest-ip "${subnet%/*}" --dest-mac "$mac_addr" --interface group_"$group_number_kk" --tcp -c 3 | grep RCVD | grep -v unreachable"
-                echo "(timeout 2 "$cmd" &>> /home/log_ping.txt ) &" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
+                echo "(timeout \${TIMEOUT} "$cmd" &>> /home/log_ping.txt ) &" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 
                 echo "results[\"${group_number_kk},${group_number_jj}\"]=\$!" >> "${DIRECTORY}"/groups/matrix/ping_all_groups.sh
 
