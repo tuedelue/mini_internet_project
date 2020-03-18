@@ -19,7 +19,7 @@ echo "#!/bin/bash" > "${DIRECTORY}"/groups/dns_routes.sh
 chmod +x "${DIRECTORY}"/groups/dns_routes.sh
 
 # dns
-docker run -itd --net='none'  --name="DNS" --privileged thomahol/d_dns
+docker run -itd --net='none'  --name="DNS" --privileged d_dns
 
 echo -n "-- add-br dns " >> "${DIRECTORY}"/groups/add_bridges.sh
 echo "ifconfig dns 0.0.0.0 up" >> "${DIRECTORY}"/groups/ip_setup.sh

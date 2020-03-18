@@ -23,7 +23,7 @@ chmod +x "${location}"/destination_ips.txt
 
 # start matrix container
 docker run -itd --net='none' --name="MATRIX" --privileged --pids-limit 500 \
-    -v "${location}"/destination_ips.txt:/home/destination_ips.txt thomahol/d_matrix
+    -v "${location}"/destination_ips.txt:/home/destination_ips.txt d_matrix
 
 # no icmp rate limiting
 docker exec -d MATRIX bash -c 'sysctl -w net.ipv4.icmp_ratelimit="0" > /dev/null' &
