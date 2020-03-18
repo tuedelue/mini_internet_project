@@ -16,6 +16,7 @@ docker build --tag=d_switch docker_images/switch/
 docker build --tag=d_matrix docker_images/matrix/
 docker build --tag=d_vpn docker_images/vpn/
 
+exit
 
 docker login
 
