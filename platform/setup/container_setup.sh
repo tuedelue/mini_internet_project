@@ -46,7 +46,7 @@ for ((k=0;k<group_numbers;k++)); do
             -v /etc/timezone:/etc/timezone:ro \
             -v /etc/localtime:/etc/localtime:ro \
             -v "${DIRECTORY}"/config/welcoming_message.txt:/etc/motd \
-            thomahol/d_ssh
+            d_ssh
 
     	# start switches
     	for ((l=0;l<n_l2_switches;l++)); do
@@ -59,7 +59,7 @@ for ((k=0;k<group_numbers;k++)); do
                 --cpus=2 --pids-limit 100 --hostname "${sname}" \
                 --name=${group_number}_L2_${l2name}_${sname} \
                 -v /etc/timezone:/etc/timezone:ro \
-                -v /etc/localtime:/etc/localtime:ro thomahol/d_switch
+                -v /etc/localtime:/etc/localtime:ro d_switch
         done
 
         # start hosts in l2 network
@@ -74,7 +74,7 @@ for ((k=0;k<group_numbers;k++)); do
                     --cpus=2 --pids-limit 100 --hostname "${hname}" \
                     --name="${group_number}""_L2_""${l2name}""_""${hname}" \
                     -v /etc/timezone:/etc/timezone:ro \
-                    -v /etc/localtime:/etc/localtime:ro thomahol/d_host
+                    -v /etc/localtime:/etc/localtime:ro d_host
             fi
         done
 
@@ -95,7 +95,7 @@ for ((k=0;k<group_numbers;k++)); do
                 -v "${location}"/daemons:/etc/frr/daemons \
                 -v "${location}"/frr.conf:/etc/frr/frr.conf \
                 -v /etc/timezone:/etc/timezone:ro \
-                -v /etc/localtime:/etc/localtime:ro thomahol/d_router
+                -v /etc/localtime:/etc/localtime:ro d_router
 
             # start host
             if [ "${property2}" == "host" ];then
@@ -103,7 +103,7 @@ for ((k=0;k<group_numbers;k++)); do
                     --name="${group_number}""_""${rname}""host" --privileged \
                     --cpus=2 --pids-limit 100 --hostname "${rname}""_host" \
                     -v /etc/timezone:/etc/timezone:ro \
-                    -v /etc/localtime:/etc/localtime:ro thomahol/d_host \
+                    -v /etc/localtime:/etc/localtime:ro d_host \
                     # -v "${location}"/connectivity.txt:/home/connectivity.txt \
                     # add this for bgpsimple -v ${DIRECTORY}/docker_images/host/bgpsimple.pl:/home/bgpsimple.pl \
 
@@ -119,7 +119,7 @@ for ((k=0;k<group_numbers;k++)); do
             --privileged \
             -v /etc/timezone:/etc/timezone:ro \
             -v /etc/localtime:/etc/localtime:ro \
-            thomahol/d_ixp
+            d_ixp
 
     fi
 
