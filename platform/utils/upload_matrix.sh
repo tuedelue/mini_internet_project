@@ -2,8 +2,9 @@
 
 while true
 do
-    docker cp MATRIX:/home/matrix.html matrix.html
-    scp matrix.html thomahol@virt07.ethz.ch:/home/web_commnet/public_html/routing_project/matrix/
+    cp groups/matrix/matrix.html groups/webserver/matrix/index.html
+    time=$(ls -lisa groups/webserver/matrix/index.html | awk '{print $8 " " $9 " " $10}')
+    sed -i "s/updated\./updated. <b>${time}<\/b>./g" groups/webserver/matrix/index.html
     echo 'matrix sent'
-    sleep 10
+    sleep 1
 done

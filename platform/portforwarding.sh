@@ -30,3 +30,6 @@ done
 ufw allow 2099
 subnet=$(subnet_ext_sshContainer "${group_number}" "MEASUREMENT")
 ssh -i groups/id_rsa -o "StrictHostKeyChecking no" -f -N -L 0.0.0.0:2099:"${subnet%/*}":22 root@${subnet%/*}
+
+#webserver
+ufw allow 80

@@ -121,6 +121,14 @@ echo "matrix_setup.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
 echo "matrix_setup.sh: "
 time ./setup/matrix_setup.sh "${DIRECTORY}"
 
+echo ""
+echo ""
+
+echo "webserver_setup.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+echo "webserver_setup.sh: "
+time ./setup/webserver_setup.sh "${DIRECTORY}"
+
+
 # echo ""
 # echo ""
 #

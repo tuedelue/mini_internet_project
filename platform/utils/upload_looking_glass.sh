@@ -27,26 +27,21 @@ do
             readarray routers < config/$group_router_config
             n_routers=${#routers[@]}
 
-            mkdir G$group_number
-
             for ((i=0;i<n_routers;i++)); do
                 router_i=(${routers[$i]})
                 rname="${router_i[0]}"
                 property1="${router_i[1]}"
                 property2="${router_i[2]}"
 
-                #(sudo cp groups/g$group_number/$rname/frr.conf groups/g$group_number/$rname/tmp.conf; \
-                #sudo chown thomas:thomas groups/g$group_number/$rname/tmp.conf ;\
+		cp groups/g${group_number}/${rname}/looking_glass.txt groups/webserver/looking_glass/G$group_number/${rname}.txt
 
-                cp groups/g${group_number}/${rname}/looking_glass.txt G$group_number/${rname}.txt
-                # (sudo install -o thomas -g thomas groups/g${group_number}/${rname}/looking_glass.txt G$group_number/${rname}.txt) &
-
-                # (sudo install -o thomas -g thomas groups/g${group_number}/${rname}/frr.conf groups/g${group_number}/${rname}/tmp.conf; \
                 echo $group_number $rname
             done
-            scp -r G$group_number thomahol@virt07.ethz.ch:/home/web_commnet/public_html/routing_project/looking_glass/
-            rm -r G$group_number
-            echo $group_number done
+	else
+	    cp groups/g${group_number}/looking_glass.txt groups/webserver/looking_glass/G$group_number/IXP.txt
         fi
+
+        echo $group_number done
     done
+    sleep 60
 done

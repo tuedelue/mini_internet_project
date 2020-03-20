@@ -14,16 +14,21 @@ source "${DIRECTORY}"/config/subnet_config.sh
 readarray groups < "${DIRECTORY}"/config/AS_config.txt
 group_numbers=${#groups[@]}
 
-location="${DIRECTORY}"/groups/matrix/
+location="${DIRECTORY}"/groups/matrix
 mkdir $location
 
 touch "$location"/destination_ips.txt
 chmod +x "${location}"/destination_ips.txt
 
+touch "$location"/matrix.html
+chmod +w "${location}"/matrix.html
+
 
 # start matrix container
 docker run -itd --net='none' --name="MATRIX" --privileged --pids-limit 500 \
-    -v "${location}"/destination_ips.txt:/home/destination_ips.txt d_matrix
+    -v "${location}"/destination_ips.txt:/home/destination_ips.txt \
+    -v "${location}"/matrix.html:/home/matrix.html \
+    d_matrix
 
 # no icmp rate limiting
 docker exec -d MATRIX bash -c 'sysctl -w net.ipv4.icmp_ratelimit="0" > /dev/null' &
