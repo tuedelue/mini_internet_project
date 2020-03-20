@@ -20,4 +20,7 @@ ovs-ofctl add-flow IXP action=NORMAL
 
 sysctl -w net.ipv4.icmp_ratelimit="0"
 
+chown -R quagga:quagga /home/bgpdump/
+/home/.looking_glass.sh &
+
 tail -f /dev/null # To keep the container running forever
