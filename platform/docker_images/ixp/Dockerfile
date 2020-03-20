@@ -13,7 +13,10 @@ RUN	touch /etc/quagga/bgpd.conf && \
 	touch /etc/quagga/zebra.conf
 
 
+
 # Add startup script and set it as entrypoint
 ADD docker-start /usr/sbin/docker-start
 RUN chmod +x /usr/sbin/docker-start
+COPY looking_glass.sh /home/.looking_glass.sh
+RUN chmod 0755 /home/.looking_glass.sh
 ENTRYPOINT ["/usr/sbin/docker-start"]
