@@ -53,10 +53,11 @@ for ((k=0;k<group_numbers;k++)); do
             # If its a host, install the 
             if [ "${property2}" == "host" ];then
 	        subnet_host="$(subnet_host_router "${group_number}" "${i}" "host")"
-                cat "${DIRECTORY}"/config/host_webserver_index.html |\
-                   sed "s/{{AS}}/${group_as}/g" |\
-                   sed "s/{{IP}}/${subnet_host}/g" |\
-		   sed "s/{{HOSTNAME}}/${rname}_host/g" > ${location}/index.html
+                cat "${DIRECTORY}"/config/host_webserver_index.html | \
+			sed "s~{{AS}}~${group_as}~g" | \
+			sed "s~{{IP}}~${subnet_host}~g" | \
+			sed "s~{{HOSTNAME}}~${rname}_host~g" \
+			> ${location}/index.html
 	    fi
         done
     else
