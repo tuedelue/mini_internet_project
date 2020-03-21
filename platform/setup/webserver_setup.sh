@@ -29,6 +29,8 @@ echo '<html>' \
 	'  </body>' \
 	'</html>' > "${DIRECTORY}"/groups/webserver/index.html
 mkdir -p "${DIRECTORY}"/groups/webserver/looking_glass
+mkdir -p "${DIRECTORY}"/groups/webserver/netflow
+mkdir -p "${DIRECTORY}"/groups/webserver/bgpdump
 mkdir -p "${DIRECTORY}"/groups/webserver/matrix
 mkdir -p "${DIRECTORY}"/groups/webserver/matrix/css
 cp "${DIRECTORY}"/docker_images/webserver/*.css "${DIRECTORY}"/groups/webserver/matrix/css 
@@ -41,8 +43,26 @@ for ((k=0;k<group_numbers;k++)); do
     group_router_config="${group_k[3]}"
 
     mkdir "${DIRECTORY}"/groups/webserver/looking_glass/G"${group_number}" || true
-done
+    mkdir "${DIRECTORY}"/groups/webserver/netflow/G"${group_number}" || true
+    mkdir "${DIRECTORY}"/groups/webserver/bgpdump/G"${group_number}" || true
 
+    if [ "${group_as}" != "IXP" ];then
+            readarray routers < "${DIRECTORY}"/config/$group_router_config
+            n_routers=${#routers[@]}
+
+            for ((i=0;i<n_routers;i++)); do
+                router_i=(${routers[$i]})
+                rname="${router_i[0]}"
+
+		location="${DIRECTORY}"/groups/webserver/bgpdump/G"${group_number}"/"${rname}"
+		mkdir $location
+
+		location="${DIRECTORY}"/groups/webserver/netflow/G"${group_number}"/"${rname}"
+		mkdir $location
+
+            done	    
+    fi
+done
 
 # start webserver container
 docker run -itd --name="WEBSERVER" --hostname="webserver" -p 80:80 --cpus=4 --pids-limit 500 \

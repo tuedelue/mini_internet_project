@@ -22,10 +22,10 @@ do
         group_config="${group_k[2]}"
         group_router_config="${group_k[3]}"
 
-	#upload
+	#uplaod
 	if [ "${group_as}" == "IXP" ];then
-	    rsync -a groups/g"${group_number}"/bgpdump/* groups/webserver/bgpdump/G"${group_number}"/ || true
-	    find groups/g"${group_number}"/bgpdump -type f -mtime +1 -delete
+	    rsync -a groups/g"${group_number}"/netflow/* groups/webserver/netflow/G$group_number/ || true
+	    find groups/g"${group_number}"/netflow -type f -mtime +1 -delete
 	else
 	    readarray routers < config/$group_router_config
             n_routers=${#routers[@]}
@@ -35,22 +35,23 @@ do
                 rname="${router_i[0]}"
 		location=groups/g"${group_number}"/"${rname}"
 
-    		rsync -a "${location}"/bgpdump/* groups/webserver/bgpdump/G"${group_number}"/"${rname}"/ || true
-		find "${location}"/bgpdump/ -type f -mtime +1 -delete
+    		rsync -a "${location}"/netflow/*  groups/webserver/netflow/G"${group_number}"/"${rname}"/ || true
+		find "${location}"/netflow/ -type f -mtime +1 -delete
             done
 	fi
 
-	#processing
-        for file in $(find groups/webserver/bgpdump/G"${group_number}"/ -type f ! -name "*.txt"); do
+	#process
+        for file in $(find groups/webserver/netflow/G"${group_number}"/ -type f ! -name "*.txt" ! -name "*current*"); do
                 echo $file
                 if [ ! -f "${file}".txt ]; then
-                        bgpdump "${file}" > "${file}".txt &
+                        nfdump -r "${file}" -o csv | gzip -9 > "${file}".csv.gz &
+                        nfdump -r "${file}" -o line > "${file}".txt &
                 fi
         done
         wait
 
         echo $group_number done
     done
-    chmod ugo+r -R groups/webserver/bgpdump/
+    chmod ugo+r -R groups/webserver/netflow/
     sleep 60
 done

@@ -95,6 +95,7 @@ for ((k=0;k<group_numbers;k++)); do
                 -v "${location}"/daemons:/etc/frr/daemons \
                 -v "${location}"/frr.conf:/etc/frr/frr.conf \
                 -v "${location}"/bgpdump:/home/bgpdump \
+                -v "${location}"/netflow:/home/netflow \
                 -v /etc/timezone:/etc/timezone:ro \
                 -v /etc/localtime:/etc/localtime:ro d_router
 
@@ -124,6 +125,7 @@ for ((k=0;k<group_numbers;k++)); do
             -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
 	    -v "${DIRECTORY}"/docker_images/router/looking_glass.sh:/root/.looking_glass.sh \
             -v "${location}"/bgpdump:/home/bgpdump \
+            -v "${location}"/netflow:/home/netflow \
             d_ixp
 
     fi

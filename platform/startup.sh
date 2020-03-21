@@ -204,6 +204,14 @@ time ./setup/router_config.sh "${DIRECTORY}"
 echo ""
 echo ""
 
+echo "netflow_start.sh: "
+echo "netflow_start.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+time ./setup/netflow_start.sh "${DIRECTORY}"
+
+
+echo ""
+echo ""
+
 echo "wait" >> "${DIRECTORY}"/groups/delay_throughput.sh
 echo "delay_throughput.sh: "
 echo "delay_throughput.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt

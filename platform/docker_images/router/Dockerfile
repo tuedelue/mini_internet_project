@@ -2,7 +2,8 @@ FROM debian:stretch
 
 # Install dependencies
 RUN apt-get update && apt-get install -y rsyslog locales libpcre3-dev apt-transport-https ca-certificates curl wget logrotate \
-    libc-ares2 libjson-c3 vim systemd procps openssh-server inetutils-traceroute net-tools tcpdump dnsutils vlan gnupg lsb-release
+    libc-ares2 libjson-c3 vim systemd procps openssh-server inetutils-traceroute net-tools tcpdump dnsutils vlan gnupg lsb-release \
+    fprobe nfdump
 
 # Install FRR
 ## add FRR GPG key
@@ -21,6 +22,9 @@ RUN sed -i -e 's/# \(en_US\.UTF-8 .*\)/\1/' /etc/locale.gen && \
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+# Add netflows
+COPY init-nf.sh /usr/sbin
 
 # Add startup script and set it as entrypoint
 COPY docker-start /usr/sbin/docker-start
