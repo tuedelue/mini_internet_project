@@ -104,7 +104,8 @@ for ((k=0;k<group_numbers;k++)); do
                     --name="${group_number}""_""${rname}""host" --privileged \
                     --cpus=2 --pids-limit 100 --hostname "${rname}""_host" \
                     -v /etc/timezone:/etc/timezone:ro \
-                    -v /etc/localtime:/etc/localtime:ro d_host \
+                    -v /etc/localtime:/etc/localtime:ro \
+		    -v "${location}"/index.html:/var/www/html/index.html d_host
                     # -v "${location}"/connectivity.txt:/home/connectivity.txt \
                     # add this for bgpsimple -v ${DIRECTORY}/docker_images/host/bgpsimple.pl:/home/bgpsimple.pl \
 

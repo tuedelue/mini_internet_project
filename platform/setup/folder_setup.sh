@@ -10,6 +10,7 @@ set -o pipefail
 set -o nounset
 
 DIRECTORY="$1"
+source "${DIRECTORY}"/config/subnet_config.sh
 
 # read configs
 readarray groups < "${DIRECTORY}"/config/AS_config.txt
@@ -34,6 +35,7 @@ for ((k=0;k<group_numbers;k++)); do
         for ((i=0;i<n_routers;i++)); do
             router_i=(${routers[$i]})
             rname="${router_i[0]}"
+            property2="${router_i[2]}"
 
             location="${DIRECTORY}"/groups/g"${group_number}"/"${rname}"
             mkdir "${location}"
@@ -42,6 +44,15 @@ for ((k=0;k<group_numbers;k++)); do
             cp config/daemons "${location}"/daemons
             touch  "${location}"/connectivity.txt
             touch  "${location}"/looking_glass.txt
+	    
+            # If its a host, install the 
+            if [ "${property2}" == "host" ];then
+	        subnet_host="$(subnet_host_router "${group_number}" "${i}" "host")"
+                cat "${DIRECTORY}"/config/host_webserver_index.html |\
+                   sed "s/{{AS}}/${group_as}/g" |\
+                   sed "s/{{IP}}/${subnet_host}/g" |\
+		   sed "s/{{HOSTNAME}}/${rname}_host/g" > ${location}/index.html
+	    fi
         done
     else
         location="${DIRECTORY}"/groups/g"${group_number}"
