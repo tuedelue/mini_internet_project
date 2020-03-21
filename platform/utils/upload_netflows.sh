@@ -41,7 +41,7 @@ do
 	fi
 
 	#process
-        for file in $(find groups/webserver/netflow/G"${group_number}"/ -type f ! -name "*.txt" ! -name "*current*"); do
+        for file in $(find groups/webserver/netflow/G"${group_number}"/ -type f ! -name "*.txt" ! -name "*.gz" -name "*current*"); do
                 echo $file
                 if [ ! -f "${file}".txt ]; then
                         nfdump -r "${file}" -o csv | gzip -9 > "${file}".csv.gz &
