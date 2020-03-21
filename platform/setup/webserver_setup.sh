@@ -16,18 +16,10 @@ group_numbers=${#groups[@]}
 
 # create web files
 mkdir -p "${DIRECTORY}"/groups/webserver/
-echo '<html>' \
-	'  <head>' \
-	'    <title>Mini Internet</title>' \
-	'  </head>' \
-	'  <body>' \
-	'    <h1>Mini Internet</h1>' \
-	'    <ul>' \
-	'      <li><a href="matrix">connectivity matrix</a></li>' \
-	'      <li><a href="looking_glass">looking glass</a></li>' \
-	'    </ul>' \
-	'  </body>' \
-	'</html>' > "${DIRECTORY}"/groups/webserver/index.html
+
+# Copy the content from config/webserver
+cp -R "${DIRECTORY}"/config/webserver/* "${DIRECTORY}"/groups/webserver/
+
 mkdir -p "${DIRECTORY}"/groups/webserver/looking_glass
 mkdir -p "${DIRECTORY}"/groups/webserver/netflow
 mkdir -p "${DIRECTORY}"/groups/webserver/bgpdump
