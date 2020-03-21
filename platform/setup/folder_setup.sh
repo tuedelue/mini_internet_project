@@ -48,10 +48,11 @@ for ((k=0;k<group_numbers;k++)); do
         touch  "${location}"/frr.conf
         touch  "${location}"/looking_glass.txt
         cp config/daemons "${location}"/daemons
-	mkdir "${location}"/bgpdump
-	mkdir "${location}"/bgpdump/ribs
-	mkdir "${location}"/bgpdump/updates
     fi
+
+    mkdir "${location}"/bgpdump
+    mkdir "${location}"/bgpdump/ribs
+    mkdir "${location}"/bgpdump/updates
 done
 
 location="${DIRECTORY}"/groups

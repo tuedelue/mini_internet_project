@@ -94,6 +94,7 @@ for ((k=0;k<group_numbers;k++)); do
                 -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
                 -v "${location}"/daemons:/etc/frr/daemons \
                 -v "${location}"/frr.conf:/etc/frr/frr.conf \
+                -v "${location}"/bgpdump:/home/bgpdump \
                 -v /etc/timezone:/etc/timezone:ro \
                 -v /etc/localtime:/etc/localtime:ro d_router
 

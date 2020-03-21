@@ -77,6 +77,10 @@ for ((k=0;k<group_numbers;k++));do
 
             echo "#!/bin/bash" >> "${location}"
             echo "vtysh  -c 'conf t' \\" >> "${location}"
+
+    	    echo " -c 'dump bgp updates /home/bgpdump/updates/updates.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+	    echo " -c 'dump bgp routes-mrt /home/bgpdump/ribs/rib.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+
             echo " -c 'interface lo' \\" >> "${location}"
             echo " -c '"ip address "$(subnet_router "${group_number}" "${i}")""' \\" >> "${location}"
             echo " -c 'exit' \\" >> "${location}"

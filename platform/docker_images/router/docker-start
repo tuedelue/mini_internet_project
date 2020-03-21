@@ -13,6 +13,8 @@ chmod 0755 /var/run/sshd
 
 mkdir -p /root/.ssh
 
+chown -R frr:frr /home/bgpdump
+
 chmod 0755 /home/.looking_glass.sh
 /home/.looking_glass.sh &
 
